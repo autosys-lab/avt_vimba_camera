@@ -83,6 +83,8 @@ public:
   bool loadCameraSettings(const std::string& filename);
   bool saveCameraSettings(const std::string& filename);
 
+  bool triggerSoftware();
+
   // Utility functions
   double getTimestampRealTime(VmbUint64_t timestamp_ticks);
   bool isOpened()

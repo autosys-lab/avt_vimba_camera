@@ -1052,4 +1052,19 @@ bool AvtVimbaCamera::saveCameraSettings(const std::string& filename)
   return true;
 }
 
+bool AvtVimbaCamera::triggerSoftware()
+{
+  bool triggered = runCommand("TriggerSoftware");
+  if (!triggered)
+  {
+    std::string trigger_source;
+    getFeatureValue("TriggerSource", trigger_source);
+    if (trigger_source != "Software")
+    {
+      RCLCPP_WARN_STREAM(nh_->get_logger(), "Feature 'TriggerSource' has to be the value 'Software' to use the software trigger");
+    }
+  }
+  return triggered;
+}
+
 }  // namespace avt_vimba_camera

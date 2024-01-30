@@ -77,6 +77,8 @@ private:
   rclcpp::Service<avt_vimba_camera_msgs::srv::LoadSettings>::SharedPtr load_srv_;
   rclcpp::Service<avt_vimba_camera_msgs::srv::SaveSettings>::SharedPtr save_srv_;
 
+  rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr software_trigger_srv_;
+
 
   void loadParams();
   void frameCallback(const FramePtr& vimba_frame_ptr);
@@ -92,6 +94,9 @@ private:
   void saveSrvCallback(const std::shared_ptr<rmw_request_id_t> request_header,
                        const avt_vimba_camera_msgs::srv::SaveSettings::Request::SharedPtr req,
                        avt_vimba_camera_msgs::srv::SaveSettings::Response::SharedPtr res);
+  void softwareTriggerCallback(const std::shared_ptr<rmw_request_id_t> request_header,
+                               const std_srvs::srv::Trigger::Request::SharedPtr req,
+                               std_srvs::srv::Trigger::Response::SharedPtr res);
 };
 }  // namespace avt_vimba_camera
 #endif

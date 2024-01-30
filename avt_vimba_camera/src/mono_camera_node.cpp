@@ -54,6 +54,8 @@ MonoCameraNode::MonoCameraNode() : Node("camera"), api_(this->get_logger()), cam
   load_srv_ = create_service<avt_vimba_camera_msgs::srv::LoadSettings>("~/load_settings", std::bind(&MonoCameraNode::loadSrvCallback, this, _1, _2, _3));
   save_srv_ = create_service<avt_vimba_camera_msgs::srv::SaveSettings>("~/save_settings", std::bind(&MonoCameraNode::saveSrvCallback, this, _1, _2, _3));
 
+  software_trigger_srv_ = create_service<std_srvs::srv::Trigger>("~/software_trigger", std::bind(&MonoCameraNode::softwareTriggerCallback, this, _1, _2, _3));
+
   loadParams();
 }
 
@@ -176,5 +178,16 @@ void MonoCameraNode::saveSrvCallback(const std::shared_ptr<rmw_request_id_t> req
   {
     res->result = cam_.saveCameraSettings(req->output_path);
   }
+}
+
+void MonoCameraNode::softwareTriggerCallback(const std::shared_ptr<rmw_request_id_t> request_header,
+                                             const std_srvs::srv::Trigger::Request::SharedPtr req,
+                                             std_srvs::srv::Trigger::Response::SharedPtr res)
+{
+  (void)request_header;
+  (void)req;
+
+  bool triggered = cam_.triggerSoftware();
+  res->success = triggered;
 }
 }  // namespace avt_vimba_camera
