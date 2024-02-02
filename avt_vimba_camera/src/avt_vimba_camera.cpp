@@ -406,7 +406,7 @@ VmbErrorType AvtVimbaCamera::setFeatureValue(const std::string& feature_str, con
                 RCLCPP_WARN_STREAM(nh_->get_logger(), "Feature " << feature_str << " is available now.");
               }
             }
-            else
+            else if (feature_str != "DeviceTemperatureSelector") // Supress warning for DeviceTemperatureSelector
             {
               RCLCPP_WARN_STREAM(nh_->get_logger(), "Feature " << feature_str << ": value unavailable\n\tERROR "
                                                                << api_.errorCodeToMessage(err));
